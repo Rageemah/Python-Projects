@@ -1,0 +1,22 @@
+import numpy as np
+daily_steps = 6532, 8741, 5403, 7829, 9126, 6087, 7324, 8560, 5972, 7645, 6891, 8102, 7456,
+6213, 9034
+#Sort data in descending order
+daily_steps = np.array(daily_steps)
+daily_steps = np.flip(np.sort(daily_steps))
+print(daily_steps)
+#Calculate the mean and standard deviation
+stand_dev = (daily_steps.std()).round()
+print(f"Standard Deviation: {stand_dev}")
+mean = (daily_steps.mean()).round()
+print(f"Mean: {mean}")
+#Determine the percentiles
+Q1 = np.percentile(daily_steps,25)
+print(f"Percentile 25: {int(Q1)}")
+median = np.median(daily_steps)
+print(f"Percentile 50/Median: {int(median)}")
+Q3 = np.percentile(daily_steps,75)
+print(f"Percentile 75: {int(Q3)}")
+#Find average steps over 7500
+part_over7500 = np.sum(daily_steps > 7500)
+print(f"Participants averaged more than 7500 steps daily: {part_over7500}")
