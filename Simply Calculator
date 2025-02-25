@@ -1,0 +1,34 @@
+a = int(input("Please enter a number: "))
+b = int(input("Please enter another number: "))
+def addition():
+    sum = a + b
+    print(sum)
+
+def subtracrion():
+    sum = a - b
+    print(sum)
+
+def division():
+    try:
+        sum = a / b
+        print(sum)
+    except:
+        if b == 0:
+            print("Error: Division by 0")
+
+def multiplication():
+    sum = a * b
+    print(sum)
+
+def calculator():
+    prod = input("Please enter operation (+,-,*,/): ")
+    if prod == "+":
+        addition()
+    elif prod == "-":
+        subtraction()
+    elif prod == "*":
+        multiplication()
+    elif prod == "/":
+        division()
+      
+calculator()
