@@ -1,0 +1,56 @@
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.linear_model import LinearRegression
+#Data
+yearexperience = np.array([1, 2, 3, 5, 7, 8, 10, 12, 15, 18])
+education = np.array([0, 0, 1, 1, 0, 2, 1, 2, 1, 2])
+salary = np.array([50, 55, 65, 75, 80, 95, 90, 105, 110, 125])
+#Creating scatter plot
+plt.figure(figsize = (12,8))
+for edu_level in range(3):
+ mask = education == edu_level
+ plt.scatter(yearexperience[mask],salary[mask],
+ label = f"{'Bachelor' if edu_level == 0 else 'Master' if edu_level == 1 else 'PhD'}")
+plt.xlabel('Years of Experience')
+plt.ylabel('Salary (in thousands of USD)')
+plt.title('Relationship between Experience, Education Level, and Salary')
+plt.legend()
+#Line of best fit
+for edu_level in range(3):
+ mask = education == edu_level
+ if np.sum(mask) > 1:
+ coef = np.polyfit(yearexperience[mask],salary[mask],1)
+ poly = np.poly1d(coef)
+ plt.plot(yearexperience,poly(yearexperience))
+#Display intercept and coefficient
+x = np.column_stack((yearexperience,education))
+y = salary
+model = LinearRegression()
+model.fit(x, y)
+print(f"The coefficeint is: {model.coef_}")
+print(f"The intercept is: {model.intercept_}")
+#Prediction for salary
+bachelors = model.predict([[6, 0]])
+phd = model.predict([[9, 2]])
+print(f"Predicted salary for 6 years of experience and a Bachelor's degree: {bachelors}")
+print(f"Predicted salary for 9 years of experience and a PhD: {phd}")
+#New graph
+plt.figure(figsize = (12,8))
+for edu_level in range(3):
+ mask = education == edu_level
+ plt.scatter(yearexperience[mask],salary[mask],
+ label = f"{'Bachelor' if edu_level == 0 else 'Master' if edu_level == 1 else 'PhD'}")
+for edu_level in range(3):
+ mask = education == edu_level
+ if np.sum(mask) > 1:
+ coef = np.polyfit(yearexperience[mask],salary[mask],1)
+ poly = np.poly1d(coef)
+ plt.plot(yearexperience,poly(yearexperience))
+experience = [6,9]
+salary2 = [bachelors,phd]
+plt.scatter(experience,salary2,label = "Prediction")
+plt.xlabel('Years of Experience')
+plt.ylabel('Salary (in thousands of USD)')
+plt.title('Salary vs Experience with Predictions')
+plt.legend()
+plt.show()
